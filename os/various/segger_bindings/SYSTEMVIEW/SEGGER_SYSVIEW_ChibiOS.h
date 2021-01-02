@@ -187,10 +187,10 @@ void SYSVIEW_ChibiOS_Start(U32 SysFreq, U32 CPUFreq, const char *isr_description
  * thread as a special case, so we need to do some ugly handling here.
  */
 #define CH_CFG_CONTEXT_SWITCH_HOOK(ntp, otp) {            \
-  if (otp->prio != IDLEPRIO) {                            \
+  if (otp->hdr.pqueue.prio != IDLEPRIO) {                            \
     SEGGER_SYSVIEW_OnTaskStopReady((U32)otp, otp->state); \
   }                                                       \
-  if (ntp->prio == IDLEPRIO) {                            \
+  if (ntp->hdr.pqueue.prio == IDLEPRIO) {                            \
     SEGGER_SYSVIEW_OnIdle();                              \
   } else {                                                \
     SEGGER_SYSVIEW_OnTaskStartExec((U32)ntp);             \
